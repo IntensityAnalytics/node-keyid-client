@@ -1,0 +1,45 @@
+{
+  "name": "keyid-client",
+  "version": "1.0.0",
+  "description": "Intensity Analytics KeyID services client.",
+  "main": "./lib/index.js",
+  "engines": {
+    "node": ">=0.12.15"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib && npm run doc",
+    "publish": "npm run build && npm publish",
+    "doc": "jsdoc2md src/*.js > doc/api.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IntensityAnalytics/node-keyid-client.git"
+  },
+  "keywords": [
+    "KeyID",
+    "UEBA"
+  ],
+  "author": "Jonathan Galentine <j.galentine@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IntensityAnalytics/node-keyid-client/issues"
+  },
+  "homepage": "https://github.com/IntensityAnalytics/node-keyid-client#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-watch": "^2.0.7",
+    "chai": "^4.1.2",
+    "jsdoc": "^3.5.4",
+    "jsdoc-to-markdown": "^3.0.0",
+    "mocha": "^3.5.0",
+    "sinon": "^3.2.1"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "rest": "^2.0.0"
+  }
+}
