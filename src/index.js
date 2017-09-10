@@ -93,10 +93,17 @@ KeyIDClient.prototype.evaluateProfile = function(entityID, tsData, sessionID = '
 	.then(response=>
 	{
 		var data = JSON.parse(response.entity);
+		
+		// return early if profile does not exist
+		if (data.Error === 'EntityID does not exist.')
+		{
+			return data;
+		}
 
 		// coerce string to boolean
 		data.Match = this.alphaToBool(data.Match);
-
+		data.IsReady = this.alphaToBool(data.IsReady);
+		
 		// set match to true and return early if using passive validation
 		if (this.settings.passiveValidation)
 		{
@@ -108,7 +115,7 @@ KeyIDClient.prototype.evaluateProfile = function(entityID, tsData, sessionID = '
 		{
 			data.Match = this.evalThreshold(data.Confidence, data.Fidelity);
 		}
-
+		
 		return data;	
 	});
 };
@@ -122,29 +129,36 @@ KeyIDClient.prototype.evaluateProfile = function(entityID, tsData, sessionID = '
  */
 KeyIDClient.prototype.loginPassiveEnrollment = function(entityID, tsData, sessionID = '')
 {
-	return this.evaluateProfile(sessionID, entityID, tsData)
+	return this.evaluateProfile(entityID, tsData, sessionID)
 	.then(data=>
 	{
-		// coerce string to boolean
-		data.Match = this.alphaToBool(data.Match);
-
 		// in base case that no profile exists save profile async and return early
 		// todo replace error string below with correct one
-		if (data.Error === 'entity does not exist')
+		if (data.Error === 'EntityID does not exist.' ||
+			data.Error === 'The profile has too little data for a valid evaluation.' ||
+			data.Error === 'The entry varied so much from the model, no evaluation is possible.')
 		{
-			this.saveProfile(sessionID, entityID, tsData);
-			data.Match = true;
-			data.Confidence = 100.0;
-			data.Fidelity = 100.0;
-			return data;
+			return this.saveProfile(entityID, tsData, sessionID)
+			.then(saveresponse=>
+			{
+				data.Match = true;
+				data.Confidence = 100.0;
+				data.Fidelity = 100.0;
+				return data;	
+			});
+			
 		}	
 
 		// if profile is not ready save profile async and return early
 		if (data.IsReady === false)
 		{
-			this.saveProfile(sessionID, entityID, tsData);
-			data.Match = true;
-			return data;
+			return this.saveProfile(entityID, tsData, sessionID)
+			.then(saveresponse=>
+			{
+				data.Match = true;
+				return data;
+			});
+			
 		}
 		
 		return data;

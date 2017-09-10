@@ -104,7 +104,7 @@ KeyIDService.prototype.typingMistake = function(entityID, mistype = '', sessionI
  */
 KeyIDService.prototype.evaluateSample = function(entityID, tsData, nonce)
 {
-	return this.post('/evaluate', {entityID, tsData, nonce, Return:'JSON'});
+	return this.post('/evaluate', {entityID, tsData, nonce, Return:'JSON', Statistics:'extended'});
 };
 
 /**
@@ -167,7 +167,7 @@ KeyIDService.prototype.saveToken = function(entityID, tsData)
  */
 KeyIDService.prototype.saveProfile = function(entityID, tsData, code = '')
 {
-	var data = {entityID, tsData, Return:'JSON'};
+	var data = {entityID, tsData, Return:'JSON', Action:'v2', Statistics:'extended'};
 	if (code !== '') data.Code = code;
 
 	return this.post('/profile', data);
