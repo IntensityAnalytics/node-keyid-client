@@ -146,7 +146,6 @@ KeyIDClient.prototype.loginPassiveEnrollment = function(entityID, tsData, sessio
 				data.Fidelity = 100.0;
 				return data;	
 			});
-			
 		}	
 
 		// if profile is not ready save profile async and return early
@@ -158,7 +157,6 @@ KeyIDClient.prototype.loginPassiveEnrollment = function(entityID, tsData, sessio
 				data.Match = true;
 				return data;
 			});
-			
 		}
 		
 		return data;
