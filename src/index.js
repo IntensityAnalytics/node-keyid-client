@@ -33,7 +33,7 @@ KeyIDClient.prototype.saveProfile = function(entityID, tsData, sessionID = '')
 		if (data.Error !== '')
 		{
 			// get a save token
-			return this.service.SaveToken(entityID, tsData)
+			return this.service.saveToken(entityID, tsData)
 			.then(response=>
 			{
 				var data = JSON.parse(response.entity);
