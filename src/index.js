@@ -33,7 +33,7 @@ KeyIDClient.prototype.saveProfile = function(entityID, tsData, sessionID = '')
 		if (data.Error !== '')
 		{
 			// get a save token
-			return this.service.SaveToken(entityID, tsData)
+			return this.service.saveToken(entityID, tsData)
 			.then(response=>
 			{
 				var data = JSON.parse(response.entity);
@@ -146,7 +146,6 @@ KeyIDClient.prototype.loginPassiveEnrollment = function(entityID, tsData, sessio
 				data.Fidelity = 100.0;
 				return data;	
 			});
-			
 		}	
 
 		// if profile is not ready save profile async and return early
@@ -158,7 +157,6 @@ KeyIDClient.prototype.loginPassiveEnrollment = function(entityID, tsData, sessio
 				data.Match = true;
 				return data;
 			});
-			
 		}
 		
 		return data;

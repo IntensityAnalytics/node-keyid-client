@@ -17,7 +17,7 @@ function KeyIDService(url, license, timeoutMs = 1000)
 {
 	this.url = url;
 	this.license = license;
-	this.client = rest.wrap(params).wrap(timeout, { timeout: timeoutMs});
+	this.client = rest.wrap(params).wrap(timeout, {timeout: timeoutMs});
 }
 
 /**
