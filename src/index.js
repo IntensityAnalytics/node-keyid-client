@@ -4,9 +4,9 @@
 const KeyIDService = require('./keyidservice.js');
 
 /**
- * KeyID services client
+ * KeyID services client.
  * @class
- * @param {string} settings - KeyID settings file
+ * @param {string} settings - KeyID settings object 
  */
 function KeyIDClient(settings)
 {
@@ -47,6 +47,9 @@ KeyIDClient.prototype.saveProfile = function(entityID, tsData, sessionID = '')
 				return data;
 			});
 		}
+
+		//todo need to return data here? (added below need to test)
+		return data;
 	});
 };	
 
@@ -65,6 +68,7 @@ KeyIDClient.prototype.removeProfile = function(entityID, tsData = '', sessionID 
 	{
 		var data = JSON.parse(response.entity);
 
+		// remove profile
 		return this.service.removeProfile(entityID, data.Token)
 		.then(response=>
 		{
@@ -133,7 +137,6 @@ KeyIDClient.prototype.loginPassiveEnrollment = function(entityID, tsData, sessio
 	.then(data=>
 	{
 		// in base case that no profile exists save profile async and return early
-		// todo replace error string below with correct one
 		if (data.Error === 'EntityID does not exist.' ||
 			data.Error === 'The profile has too little data for a valid evaluation.' ||
 			data.Error === 'The entry varied so much from the model, no evaluation is possible.')
@@ -142,6 +145,7 @@ KeyIDClient.prototype.loginPassiveEnrollment = function(entityID, tsData, sessio
 			.then(saveresponse=>
 			{
 				data.Match = true;
+				data.IsReady = false;
 				data.Confidence = 100.0;
 				data.Fidelity = 100.0;
 				return data;	
@@ -159,6 +163,20 @@ KeyIDClient.prototype.loginPassiveEnrollment = function(entityID, tsData, sessio
 			});
 		}
 		
+		return data;
+	});
+};
+
+/**
+ * Returns profile information without modifying the profile.
+ * @param {String} entityID - Profile to inspect.
+ */
+KeyIDClient.prototype.GetProfileInfo = function(entityID)
+{
+	return this.service.GetProfileInfo(entityID)
+	.then(response=>
+	{
+		var data = JSON.parse(response.entity);
 		return data;
 	});
 };

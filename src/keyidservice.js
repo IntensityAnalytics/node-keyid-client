@@ -21,9 +21,9 @@ function KeyIDService(url, license, timeoutMs = 1000)
 }
 
 /**
- * URL encodes the properties of a JSON object
- * @param  {Object} obj
- * @return {Object}     
+ * URL encodes the properties of a JSON object.
+ * @param  {Object} obj - JSON object.
+ * @return {Object} 	- URL encoded JSON object.    
  */
 KeyIDService.prototype.encodeJSONProperties = function(obj){
 	for (var key in obj)
@@ -121,7 +121,7 @@ KeyIDService.prototype.nonce = function(nonceTime)
  * Retrieve a profile removal security token.
  * @param  {String} entityID - Profile name.
  * @param  {String} tsData   - Optional typing sample for removal authorization.
- * @return {Promise}         - REST request and response
+ * @return {Promise}         - REST request and response.
  */
 KeyIDService.prototype.removeToken = function(entityID, tsData)
 {
@@ -171,6 +171,11 @@ KeyIDService.prototype.saveProfile = function(entityID, tsData, code = '')
 	if (code !== '') data.Code = code;
 
 	return this.post('/profile', data);
+};
+
+KeyIDService.prototype.GetProfileInfo = function(entityID)
+{
+	return this.get('/profile' + entityID, {});
 };
 
 module.exports = KeyIDService;
