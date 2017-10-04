@@ -18,6 +18,7 @@
     * [.removeProfile(entityID, tsData, sessionID)](#KeyIDClient+removeProfile) ⇒ <code>Promise</code>
     * [.evaluateProfile(entityID, tsData, sessionID)](#KeyIDClient+evaluateProfile) ⇒ <code>Promise</code>
     * [.loginPassiveEnrollment(entityID, tsData, sessionID)](#KeyIDClient+loginPassiveEnrollment) ⇒ <code>Promise</code>
+    * [.GetProfileInfo(entityID)](#KeyIDClient+GetProfileInfo)
     * [.evalThreshold(confidence, fidelity)](#KeyIDClient+evalThreshold) ⇒ <code>Bool</code>
     * [.alphaToBool(input)](#KeyIDClient+alphaToBool) ⇒ <code>Bool</code>
     * [.dotNetTicks()](#KeyIDClient+dotNetTicks) ⇒ <code>Number</code>
@@ -25,12 +26,12 @@
 <a name="new_KeyIDClient_new"></a>
 
 ### new KeyIDClient(settings)
-KeyID services client
+KeyID services client.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| settings | <code>string</code> | KeyID settings file |
+| settings | <code>string</code> | KeyID settings object |
 
 <a name="KeyIDClient+saveProfile"></a>
 
@@ -83,6 +84,17 @@ Evaluates a given profile and adds typing sample to profile.
 | entityID | <code>String</code> | Profile to evaluate. |
 | tsData | <code>String</code> | Typing sample to evaluate and save. |
 | sessionID | <code>String</code> | Session identifier for logging purposes. |
+
+<a name="KeyIDClient+GetProfileInfo"></a>
+
+### keyIDClient.GetProfileInfo(entityID)
+Returns profile information without modifying the profile.
+
+**Kind**: instance method of [<code>KeyIDClient</code>](#KeyIDClient)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| entityID | <code>String</code> | Profile to inspect. |
 
 <a name="KeyIDClient+evalThreshold"></a>
 
@@ -149,13 +161,14 @@ KeyID services REST client.
 <a name="KeyIDService+encodeJSONProperties"></a>
 
 ### keyIDService.encodeJSONProperties(obj) ⇒ <code>Object</code>
-URL encodes the properties of a JSON object
+URL encodes the properties of a JSON object.
 
 **Kind**: instance method of [<code>KeyIDService</code>](#KeyIDService)  
+**Returns**: <code>Object</code> - - URL encoded JSON object.  
 
-| Param | Type |
-| --- | --- |
-| obj | <code>Object</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| obj | <code>Object</code> | JSON object. |
 
 <a name="KeyIDService+post"></a>
 
@@ -233,7 +246,7 @@ Retrieve a nonce.
 Retrieve a profile removal security token.
 
 **Kind**: instance method of [<code>KeyIDService</code>](#KeyIDService)  
-**Returns**: <code>Promise</code> - - REST request and response  
+**Returns**: <code>Promise</code> - - REST request and response.  
 
 | Param | Type | Description |
 | --- | --- | --- |
