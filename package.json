@@ -1,6 +1,6 @@
 {
   "name": "keyid-client",
-  "version": "1.0.4
+  "version": "1.0.4",
   "description": "Intensity Analytics KeyID services client.",
   "main": "./lib/index.js",
   "engines": {
