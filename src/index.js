@@ -29,8 +29,8 @@ KeyIDClient.prototype.saveProfile = function(entityID, tsData, sessionID = '')
 	{
 		var data = JSON.parse(response.entity);
 				
-		// token is required
-		if (data.Error !== '')
+		// token is required if there is an error
+		if (data.Error === 'New enrollment code required.')
 		{
 			// get a save token
 			return this.service.saveToken(entityID, tsData)
@@ -48,7 +48,6 @@ KeyIDClient.prototype.saveProfile = function(entityID, tsData, sessionID = '')
 			});
 		}
 
-		//todo need to return data here? (added below need to test)
 		return data;
 	});
 };	
@@ -68,13 +67,18 @@ KeyIDClient.prototype.removeProfile = function(entityID, tsData = '', sessionID 
 	{
 		var data = JSON.parse(response.entity);
 
-		// remove profile
-		return this.service.removeProfile(entityID, data.Token)
-		.then(response=>
+		if (typeof data.Token !== 'undefined' && data.Token !== null)
 		{
-			var data = JSON.parse(response.entity);
+			// remove profile
+			return this.service.removeProfile(entityID, data.Token)
+			.then(response=>
+			{
+				var data = JSON.parse(response.entity);
+				return data;
+			});
+		}
+		else
 			return data;
-		});
 	});	
 };
 
@@ -98,28 +102,26 @@ KeyIDClient.prototype.evaluateProfile = function(entityID, tsData, sessionID = '
 	{
 		var data = JSON.parse(response.entity);
 		
-		// return early if profile does not exist
-		if (data.Error === 'EntityID does not exist.')
+		// return early if there is an error
+		if (data.Error === '')
 		{
-			return data;
+			// coerce string to boolean
+			data.Match = this.alphaToBool(data.Match);
+			data.IsReady = this.alphaToBool(data.IsReady);
+			
+			// set match to true and return early if using passive validation
+			if (this.settings.passiveValidation)
+			{
+				data.Match = true;
+				return data;
+			}
+			// evaluate match value using custom threshold if enabled
+			else if (this.settings.customThreshold)
+			{
+				data.Match = this.evalThreshold(data.Confidence, data.Fidelity);
+			}
 		}
 
-		// coerce string to boolean
-		data.Match = this.alphaToBool(data.Match);
-		data.IsReady = this.alphaToBool(data.IsReady);
-		
-		// set match to true and return early if using passive validation
-		if (this.settings.passiveValidation)
-		{
-			data.Match = true;
-			return data;
-		}
-		// evaluate match value using custom threshold if enabled
-		else if (this.settings.customThreshold)
-		{
-			data.Match = this.evalThreshold(data.Confidence, data.Fidelity);
-		}
-		
 		return data;	
 	});
 };
@@ -153,7 +155,7 @@ KeyIDClient.prototype.loginPassiveEnrollment = function(entityID, tsData, sessio
 		}	
 
 		// if profile is not ready save profile async and return early
-		if (data.IsReady === false)
+		if (data.Error === '' && data.IsReady === false)
 		{
 			return this.saveProfile(entityID, tsData, sessionID)
 			.then(saveresponse=>
@@ -207,7 +209,7 @@ KeyIDClient.prototype.evalThreshold = function(confidence, fidelity)
  */
 KeyIDClient.prototype.alphaToBool = function(input)
 {
-	if (input.toUpperCase().trim() == 'TRUE')
+	if (input.toUpperCase().trim() === 'TRUE')
 		return true;
 	else
 		return false;
