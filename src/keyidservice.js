@@ -173,9 +173,9 @@ KeyIDService.prototype.saveProfile = function(entityID, tsData, code = '')
 	return this.post('/profile', data);
 };
 
-KeyIDService.prototype.GetProfileInfo = function(entityID)
+KeyIDService.prototype.getProfileInfo = function(entityID)
 {
-	return this.get('/profile' + entityID, {});
+	return this.get('/profile/' + entityID, {});
 };
 
 module.exports = KeyIDService;

@@ -173,13 +173,13 @@ KeyIDClient.prototype.loginPassiveEnrollment = function(entityID, tsData, sessio
  * Returns profile information without modifying the profile.
  * @param {String} entityID - Profile to inspect.
  */
-KeyIDClient.prototype.GetProfileInfo = function(entityID)
+KeyIDClient.prototype.getProfileInfo = function(entityID)
 {
-	return this.service.GetProfileInfo(entityID)
+	return this.service.getProfileInfo(entityID)
 	.then(response=>
 	{
 		var data = JSON.parse(response.entity);
-		return data;
+		return data[0];
 	});
 };
 
