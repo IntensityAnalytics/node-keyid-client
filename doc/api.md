@@ -18,7 +18,7 @@
     * [.removeProfile(entityID, tsData, sessionID)](#KeyIDClient+removeProfile) ⇒ <code>Promise</code>
     * [.evaluateProfile(entityID, tsData, sessionID)](#KeyIDClient+evaluateProfile) ⇒ <code>Promise</code>
     * [.loginPassiveEnrollment(entityID, tsData, sessionID)](#KeyIDClient+loginPassiveEnrollment) ⇒ <code>Promise</code>
-    * [.GetProfileInfo(entityID)](#KeyIDClient+GetProfileInfo)
+    * [.getProfileInfo(entityID)](#KeyIDClient+getProfileInfo)
     * [.evalThreshold(confidence, fidelity)](#KeyIDClient+evalThreshold) ⇒ <code>Bool</code>
     * [.alphaToBool(input)](#KeyIDClient+alphaToBool) ⇒ <code>Bool</code>
     * [.dotNetTicks()](#KeyIDClient+dotNetTicks) ⇒ <code>Number</code>
@@ -85,9 +85,9 @@ Evaluates a given profile and adds typing sample to profile.
 | tsData | <code>String</code> | Typing sample to evaluate and save. |
 | sessionID | <code>String</code> | Session identifier for logging purposes. |
 
-<a name="KeyIDClient+GetProfileInfo"></a>
+<a name="KeyIDClient+getProfileInfo"></a>
 
-### keyIDClient.GetProfileInfo(entityID)
+### keyIDClient.getProfileInfo(entityID)
 Returns profile information without modifying the profile.
 
 **Kind**: instance method of [<code>KeyIDClient</code>](#KeyIDClient)  

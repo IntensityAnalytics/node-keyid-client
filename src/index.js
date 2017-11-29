@@ -28,7 +28,10 @@ KeyIDClient.prototype.saveProfile = function(entityID, tsData, sessionID = '')
 	.then(response=>
 	{
 		var data = JSON.parse(response.entity);
-				
+		
+		if (data.Error === 'Invalid license key.')
+			throw 'Invalid license key';
+
 		// token is required if there is an error
 		if (data.Error === 'New enrollment code required.')
 		{
@@ -67,6 +70,9 @@ KeyIDClient.prototype.removeProfile = function(entityID, tsData = '', sessionID 
 	{
 		var data = JSON.parse(response.entity);
 
+		if (data.Error === 'Invalid license key.')
+			throw 'Invalid license key';
+
 		if (typeof data.Token !== 'undefined' && data.Token !== null)
 		{
 			// remove profile
@@ -101,6 +107,9 @@ KeyIDClient.prototype.evaluateProfile = function(entityID, tsData, sessionID = '
 	.then(response=>
 	{
 		var data = JSON.parse(response.entity);
+		
+		if (data.Error === 'Invalid license key.')
+			throw 'Invalid license key';
 		
 		// return early if there is an error
 		if (data.Error === '')
