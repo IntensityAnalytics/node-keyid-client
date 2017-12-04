@@ -237,4 +237,22 @@ KeyIDClient.prototype.dotNetTicks = function()
 	return ticks;
 };
 
+KeyIDClient.prototype.getJS = function()
+{
+	return this.service.get('/library/keyid', {})
+	.then(response=>
+	{
+		return response.entity;
+	});
+};
+
+KeyIDClient.prototype.getJSVerbose = function()
+{
+	return this.service.get('/library/keyid-verbose', {})
+	.then(response=>
+	{
+		return response.entity;
+	});
+};
+
 module.exports = KeyIDClient;
