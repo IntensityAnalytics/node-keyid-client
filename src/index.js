@@ -178,6 +178,84 @@ KeyIDClient.prototype.loginPassiveEnrollment = function(entityID, tsData, sessio
   });
 };
 
+KeyIDClient.prototype.SaveErrorResult = function()
+{
+  const result = {
+    "Error": "Error saving profile.",
+    "Match": false,
+    "IsReady": false,
+    "Confidence": "0",
+    "Fidelity": "0",
+    "Profiles": "0"
+  };
+
+  return result;
+};
+
+KeyIDClient.prototype.EvaluateEnrollProfile = function(entityID, tsData, sessionID)
+{
+  return this.evaluateProfile(entityID, tsData, sessionID).then(data => {
+    if (data.Error === 'EntityID does not exist.') {
+      return this.saveProfile(entityID, tsData, sessionID).then(saveData => {
+        if (saveData.Error === '') {
+          const evalData = {
+            "Error": "",
+            "Match": true,
+            "IsReady": false,
+            "Confidence":  "100.0",
+            "Fidelity": "100.0",
+            "Profiles": "0"
+          };
+          return evalData;
+        }
+        else {
+          return this.SaveErrorResult();
+        }
+      });
+    }
+
+    if (data.IsReady == false) {
+      if (data.Error === '') {
+        return this.saveProfile(entityID, tsData, sessionID).then(saveData => {
+          if (saveData.Error === '') {
+            let evalData = Object.assign({}, saveData);
+            evalData.Error = '';
+            evalData.Match = true;
+            return evalData;
+          }
+          else
+            return this.SaveErrorResult();
+        });
+      }
+      else if (data.Error === 'The profile has too little data for a valid evaluation.' ||
+               data.Error === 'The entry varied so much from the model, no evaluation is possible.') {
+        return this.saveProfile(entityID, tsData, sessionID).then(saveData => {
+          if (saveData.Error === '') {
+            let evalData = Object.assign({}, saveData);
+            evalData.Error = '';
+            evalData.Match = true;
+            evalData.Confidence = "100.0";
+            evalData.Fidelity = "100.0";
+            return evalData;
+          }
+          else
+            return this.SaveErrorResult(); 
+        });
+      }
+    }
+
+    return data;
+  });
+};
+
+KeyIDClient.prototype.Login = function(entityID, tsData, sessionID)
+{
+  if(this.settings.loginEnrollment)
+    return this.EvaluateEnrollProfile(entityID, tsData, sessionID);
+  else
+    return this.EvaluateProfile(entityID, tsData, sessionID);
+};
+
 /**
  * Returns profile information without modifying the profile.
  * @param {String} entityID - Profile to inspect.
