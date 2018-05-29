@@ -72,6 +72,17 @@ test('login passive enrollment bad data', () => {
   });
 });
 
+test('save profile bad data', () => {
+  client.settings.loginEnrollment = true;
+  expect.assertions(1);
+  return client.removeProfile(entityID, '', '').then(() => {
+    return client.saveProfile(entityID, 'M7asMTM2MzMwNDSxMDQxMLY0AIKa0hpnnxo/n5oIMPR3AgA=', '');
+  }).then(resp => {
+    client.settings.loginEnrollment = false;
+    expect(JSON.stringify(resp)).toBe('{"Error":"Profile cannot be updated, because of corrupt input data. See the error log for additional details."}');
+  });
+});
+
 test('test passive enrollment', () => {
   client.settings.loginEnrollment = true;
   expect.assertions(3);
