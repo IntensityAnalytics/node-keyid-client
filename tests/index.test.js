@@ -5,6 +5,10 @@ settings.url = "https://keyidservices.tickstream.com";
 let client = new KeyID(settings);  
 let entityID = 'javascripttest1';
 
+beforeAll(() => {
+  jest.setTimeout(50000);
+});
+
 test('remove profile', () => {
   expect.assertions(1);
   return client.removeProfile(entityID, '', '').then(resp => {
@@ -65,5 +69,49 @@ test('login passive enrollment bad data', () => {
     expect(resp.Confidence).toBe('0');
     expect(resp.Fidelity).toBe('0');
     expect(resp.Match).toBe(false);
+  });
+});
+
+test('test passive enrollment', () => {
+  client.settings.loginEnrollment = true;
+  expect.assertions(3);
+  return client.removeProfile(entityID, '', '').then(() => {
+    return client.Login(entityID, 'jdG9EcIwDIbhWdjAsmT9tNDmoGUABqCh8/AcqazYHxenfU6v5TB3ZdVCodKUrfxOf/Xb1u9bf+7f43rhJXv/Z8Kys8/EJDGvIHpgAqJtZI0JTFuyeVqKamGwQpqmVM8wIzlzN6N2ZlNzA1EdmQf6p0s2RxMLRQ9iiVmA6JLN0ZFZaQGinhiMZuZo08RI0PPGyGpVED0wB9HMgpbRLw==');
+  }).then(() => {
+    return client.Login(entityID, 'jdMxDsIwDAXQs3CDuE6ceIW1gpUDcAAWthweiBji2F+0XTo8/Z98qcxdWCSRSm6Jcvo+/dEve7/u/T7e2/nEC6PBno7lmW1EIG1hG0hjy9pgL8eKYZ+vuHRh9cgV+DfIn1KudITlguYNmT+bYYUKKJWZSWJQGjJfWg1TBWmGjXHDNLGsgivYNMmANcMamjdk/myGNUbz6syUUenC0C9jmUpY+gY=');
+  }).then(() => {
+    return client.Login(entityID, 'jdJBDgIhDIXhs3iDQqGUrW4nuvUAHsCNOw4vGTWh0KfOJLP6wk9hmJuwCIUqmTQVof60Wztt7by16/5ejgeeWNnZ/TvL/GKPhSXD+sePumyN5pFJYLDaxBJYzUTlHV1HMKsVQpMapvTX3j7sx6SaFERlZDWhO50YutORVYJ3WgzLaFKXrVHDAjxeNSyiqMvWqGWKonVkse/Oj04sgqhhnPz/7Qk=');
+  }).then(() => {
+    return client.Login(entityID, 'jdJBEsIgDAXQs3gDQkggW912dOsBPIAbdxzeTh1HUvgV2L7Jz6dlrsqqgUyFjHMM66mPelnqdan37d7OJ94x3tjzmKX0Ya+OJcc0gNAdIxAqLZMoYNqQ9dNcqJQAKrhpSjTFzGZ2+7I/TbOi3bRlRdDzDlkfmltmjCp4ltA09SyDCuXH1l+SUOiQHVZYWZwLNfRNrWVUFOw2ZP1ujkUZh74B');
+  }).then(() => {
+    return client.Login(entityID, 'jdM7EgIhEATQs3gDmB9MqumWm3oAD2BixuG1iJhZ21pIX03TFDAPY7NS3ZTcvZfvGs9x28Z9G4+59+uFE/PJXv8Yl9J0sveBSWBeQWhiBEJ1ZVUFTEtMwbQQSoVBhTCNGDUNjInOnI2JzzTl5iDUViadQWhiAkIDU0VNW2ANPaSf7BjaV2aC7i0xVCGEmlZQIUxrJID5ynpFTRNDXyayqY6hHw==');
+  }).then(() => {
+    return client.Login(entityID, 'jdKxEcIwDAXQWdhAlmTZaqHNkZYBGICGzsOTCwWWZZ1J2nf/fzshakIikFQyac0Jjqc9221r9609zne/XmhgeLKXY9wzhRKkTZlPM6WKdLK3Y9kwwaB0YLQ+AgNgWZcejP/YxpAY1tt+zG8zDIGDUjFMo68wsBqUGkZFg9JiWFg6sKi09oylBmlT5tNMKRcJjmDSMmLAtGff3222bcr8Nst0fr0f');
+  }).then(() => {
+    return client.Login(entityID, 'jdIxEgIxCEDRs3gDCISEVtsdbT2AB7Cx4/A6sQkGxmTbN/xlEiITEgFUqRWKKnyOPexy2PWw+/hu5xM5RjCOPf8wGdBeC2PHWhYN2RqtM2OmZFrI1mkuyorJCm5aRd5hgrDzb4K4s6lIS6Iys/atBtEfVpKoY51LEm2O1exOPZPsITmmWJNod4yyTUO2Rj3TLKoTQ9CeREO2Rh3DFj+kNw==');
+  }).then(() => {
+    return client.Login(entityID, 'jdK7DQMhDIDhWbIB+E2btKekzQAZIE06hs+JCp+xBLSf+LEAsQuKlNqEpTat5Vz90x9Hfx79PfbrfsMLg8G+gdHEoIgmpy1ZPA0dUxrsFxjPrEI2woVtjVDVdqJQYIsZ7twNjJK7OYYkSVRmRlyS6JLFqGMM2aTqGFMSXbIYdez8cUnUHENJoheW/TfPTJNom5k2TqJLFqOOGa/f9A8=');
+  }).then(() => {
+    return client.Login(entityID, 'jdGxDQMhDAXQWbIB2GDsNmlPuTYDZIA06Rg+6CoMfAWQqJ7+twVzFRYJ0SSXINFCO/VdH0d9HvV13fN+Y88oXuzzh5le7Dux1LNCAkqXbC7NjhUFaUs2p7lSTQxWcGkqssOMt2Yzto1N2xeg2cQxQ6UDQ6WOtReUlp5RJFC6ZHOpOqYM0gaWQJovNQIruDQWxKxnKUUw28DQpo5lWpf+AA==');
+  }).then(() => {
+    return client.Login(entityID, 'jdFBDgIhDAXQs3gDaGlpt7qdOFsP4AHcuOPwGhITYPgOsH35vwXmoqwaoqsYmVr4nvIst63ct/Kod79eeGBe2es/c46VvQ8sdSyj0oGhUmkYB2aQNrAE0lLHzMAKXVokWmKeVmb7sZNNSRyUastYCZQOjEFpblmSANKm7JimPUPPay0TQn86ZScrCK2VugDmLVOPYLYpO87WsZzytPQD');
+  }).then(() => {
+    return client.Login(entityID, 'jdMxEgIhDAXQs3iDhJBAWm13tPUAHsDGjsPrUDgb4O8stG/ySQCRZmJG7Kaeihj9Vnu129buW3v2/bheZGC1s/cxq5Q6+0wsByYZhA5MQagG5gSqLdlcLYS6MGghVPNCJ5iQ+omz/dlxp8JsINT2LDEayMAYhEbmaCBlz4TRnS7ZHFoDq+hZDgw9yxjqGbQQqmVD4/U904LudMnmswVmuv4yXw==');
+  }).then(() => {
+    return client.Login(entityID, 'jdI9DsMgDAXgs/QGOP4Br+0aNWsP0AN06cbhG0UZMPCqEInp03t2BHM1Nkvk+yWZLe2nvutjrc+1vo5vu994yj7/WaF0sO/AJDAhUNoxBqXaMicBaR1TkBZKPRNYIaa5XmCail+YTZPThU2VJINSa9kiCyidsrE0MOYFlObAztnG0o4VUFpaJudDGtM6hv5bjszBCjGtCGDeMjUGs03ZOFtgxvOH9AM=');
+  }).then(() => {
+    return client.Login(entityID, 'jdI9EgIhDAXgs3gDQv5Iq+2Oth7AA9jYcXidrQi7bwTab/LyGJi7sVmhMCOR2srv9Fe/bf2+9ed+H9cLZ8ZlZ+8/LGJnnwOTkSlXEHrKjqGaWDCYNjEB01KoaQEV0jRzXWHuZWU3d1pp2qqDUBtZVAKhE0PP6wPTQqjCxFAFywz9kJZYQz9kYrxUIWgllFQAi5FVFrDbxBTslhjTeegX');
+  }).then(() => {
+    return client.Login(entityID, 'jdKxEcMgDIXhWbIBQiCkNml9cZsBMoAbdwyfHJcCAe9iu/1OP8JmrsIigUwkpsA5fJ/6ro+tPrf6au9+v/HASmPHH2ba2Dmx1DNKDKIDyyCaexYpgGkDIzDNRaMUsIKfZuEKY5UrZ2NF1+tY+n2sOSo9yxFd75LNUc8MRUvPhBREl2yOqmNKYNrA0Ao+qgZWcNNKRptazxT+vUs2n80xo3X0Aw==');
+  }).then(() => {
+    return client.Login(entityID, 'jdJBDgIhDAXQs3iDQmmhW91OnK0H8ABu3HF4DdGEwvwMsH35vw0wV2VVCqbKzBToe+qz3rZ63+qj3f164YHFxl4nzKSx98RSz1LrPCodWACl4liOIG1gDNJcqTCBFVyaaFxhmpZm+7OTTTNlUKo9K2Sg1LPfK8yl2bGC0jwzlOZLrYAVSs8sox8yMPRDsme2UJpIAmDWsyAJzHbI5tkci+G49AM=');
+  }).then(() => {
+    return client.Login(entityID, 'jdGxDQMhDAXQWbKBwWDjNmlPSZsBMkCa6xj+TqdEAmwLoH3y/wbESkgEQUhQMEY4T/3Ux1afW31f93W/ocm+iqWWJQjONJPpadgzudiuWO5YASfUZJMVcsoroZlhhRHjSrc/0906xtF7EGpZQe9PB+aFcsskeCsMLDnTulCJ3ruVjjE7oSabrVDiPPSs//sFzaRlAcnpNjC72wE=');
+  }).then(() => {
+    return client.evaluateProfile(entityID, 'jdJBEsIgDAXQs3gDQkggW912dOsBPIAbdxzeTh1HUvgV2L7Jz6dlrsqqgUyFjHMM66mPelnqdan37d7OJ94x3tjzmKX0Ya+OJcc0gNAdIxAqLZMoYNqQ9dNcqJQAKrhpSjTFzGZ2+7I/TbOi3bRlRdDzDlkfmltmjCp4ltA09SyDCuXH1l+SUOiQHVZYWZwLNfRNrWVUFOw2ZP1ujkUZh74B');
+  }).then(resp => {
+    expect(resp.Confidence).toBe('98');
+    expect(resp.Fidelity).toBe('72');
+    expect(resp.Profiles).toBe('15');
   });
 });

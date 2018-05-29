@@ -110,14 +110,18 @@ KeyIDClient.prototype.evaluateProfile = function(entityID, tsData, sessionID = '
     
     if (data.Error === 'Invalid license key.')
       throw 'Invalid license key';
-    
+
+    // coerce string to boolean
+    if (data.Match)
+      data.Match = this.alphaToBool(data.Match);
+    if (data.IsReady)
+      data.IsReady = this.alphaToBool(data.IsReady);
+
     // return early if there is an error
     if (data.Error === '')
     {
-      // coerce string to boolean
-      data.Match = this.alphaToBool(data.Match);
-      data.IsReady = this.alphaToBool(data.IsReady);
       
+
       // set match to true and return early if using passive validation
       if (this.settings.passiveValidation)
       {
