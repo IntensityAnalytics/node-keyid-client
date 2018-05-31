@@ -146,56 +146,6 @@ KeyIDClient.prototype.evaluateProfile = function(entityID, tsData, sessionID = '
  * @param  {String} sessionID - Session identifier for logging purposes.
  * @return {Promise}          
  */
-KeyIDClient.prototype.loginPassiveEnrollment = function(entityID, tsData, sessionID = '')
-{
-  return this.evaluateProfile(entityID, tsData, sessionID)
-  .then(data=>
-  {
-    // in base case that no profile exists save profile async and return early
-    if (data.Error === 'EntityID does not exist.' ||
-      data.Error === 'The profile has too little data for a valid evaluation.' ||
-      data.Error === 'The entry varied so much from the model, no evaluation is possible.')
-    {
-      return this.saveProfile(entityID, tsData, sessionID)
-      .then(saveresponse=>
-      {
-        data.Match = true;
-        data.IsReady = false;
-        data.Confidence = 100.0;
-        data.Fidelity = 100.0;
-        return data;
-      });
-    }
-
-    // if profile is not ready save profile async and return early
-    if (data.Error === '' && data.IsReady === false)
-    {
-      return this.saveProfile(entityID, tsData, sessionID)
-      .then(saveresponse=>
-      {
-        data.Match = true;
-        return data;
-      });
-    }
-    
-    return data;
-  });
-};
-
-KeyIDClient.prototype.SaveErrorResult = function()
-{
-  const result = {
-    "Error": "Error saving profile.",
-    "Match": false,
-    "IsReady": false,
-    "Confidence": "0",
-    "Fidelity": "0",
-    "Profiles": "0"
-  };
-
-  return result;
-};
-
 KeyIDClient.prototype.EvaluateEnrollProfile = function(entityID, tsData, sessionID)
 {
   return this.evaluateProfile(entityID, tsData, sessionID).then(data => {
@@ -252,12 +202,36 @@ KeyIDClient.prototype.EvaluateEnrollProfile = function(entityID, tsData, session
   });
 };
 
+/**
+ * Courtesy function that choses normal evaluation or passive enrollment to simplify calling code.
+ * @param  {String} entityID  - Profile to evaluate.
+ * @param  {String} tsData    - Typing sample to evaluate and save.
+ * @param  {String} sessionID - Session identifier for logging purposes.
+ * @return {Promise}   
+ */
 KeyIDClient.prototype.Login = function(entityID, tsData, sessionID)
 {
   if(this.settings.loginEnrollment)
     return this.EvaluateEnrollProfile(entityID, tsData, sessionID);
   else
     return this.EvaluateProfile(entityID, tsData, sessionID);
+};
+
+/**
+ * Return object when error saving profile.
+ */
+KeyIDClient.prototype.SaveErrorResult = function()
+{
+  const result = {
+    "Error": "Error saving profile.",
+    "Match": false,
+    "IsReady": false,
+    "Confidence": "0",
+    "Fidelity": "0",
+    "Profiles": "0"
+  };
+
+  return result;
 };
 
 /**
