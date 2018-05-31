@@ -1,0 +1,11 @@
+{
+  "license": "",
+  "url": "",
+  "passiveValidation": false,
+  "passiveEnrollment": false,
+  "customThreshold": false,
+  "thresholdConfidence": 70.0,
+  "thresholdFidelity": 50.0,
+  "timeout": 100000,
+  "strictSSL": true
+}

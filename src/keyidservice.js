@@ -15,9 +15,9 @@ const timeout = require('rest/interceptor/timeout');
  */
 function KeyIDService(url, license, timeoutMs = 1000)
 {
-	this.url = url;
-	this.license = license;
-	this.client = rest.wrap(params).wrap(timeout, {timeout: timeoutMs});
+  this.url = url;
+  this.license = license;
+  this.client = rest.wrap(params).wrap(timeout, {timeout: timeoutMs});
 }
 
 /**
@@ -26,15 +26,15 @@ function KeyIDService(url, license, timeoutMs = 1000)
  * @return {Object} 	- URL encoded JSON object.    
  */
 KeyIDService.prototype.encodeJSONProperties = function(obj){
-	for (var key in obj)
-	{
-		if (obj.hasOwnProperty(key))
-		{
-			obj[key] = encodeURIComponent(obj[key]);
-		}
-	}
+  for (var key in obj)
+  {
+    if (obj.hasOwnProperty(key))
+    {
+      obj[key] = encodeURIComponent(obj[key]);
+    }
+  }
 
-	return obj;
+  return obj;
 };
 
 /**
@@ -45,21 +45,21 @@ KeyIDService.prototype.encodeJSONProperties = function(obj){
  */
 KeyIDService.prototype.post =  function(path, data)
 {
-	data.License = this.license;
-	var dataEncoded = this.encodeJSONProperties(data);
-	var dataEncodedJSON = JSON.stringify(dataEncoded);
+  data.License = this.license;
+  var dataEncoded = this.encodeJSONProperties(data);
+  var dataEncodedJSON = JSON.stringify(dataEncoded);
 
-	var request = {
-		path: this.url + path,
-		method: 'POST',
-		entity: '=[' + dataEncodedJSON + ']',
-		headers:
-		{
-			'content-type':'application/x-www-form-urlencoded'
-		}
-	};
-	
-	return this.client(request);
+  var request = {
+    path: this.url + path,
+    method: 'POST',
+    entity: '=[' + dataEncodedJSON + ']',
+    headers:
+    {
+      'content-type':'application/x-www-form-urlencoded'
+    }
+  };
+  
+  return this.client(request);
 };
 
 /**
@@ -70,13 +70,13 @@ KeyIDService.prototype.post =  function(path, data)
  */
 KeyIDService.prototype.get = function(path, data)
 {
-	var request = {
-		path: this.url + path,
-		method: 'GET',
-		params: data
-	};
+  var request = {
+    path: this.url + path,
+    method: 'GET',
+    params: data
+  };
 
-	return this.client(request);
+  return this.client(request);
 };
 
 /**
@@ -92,7 +92,7 @@ KeyIDService.prototype.get = function(path, data)
  */
 KeyIDService.prototype.typingMistake = function(entityID, mistype = '', sessionID = '', source = '', action = '', template = '', page = '')
 {	
-	return this.post('/typingmistake', {entityID, mistype, sessionID, source, action, template, page});
+  return this.post('/typingmistake', {entityID, mistype, sessionID, source, action, template, page});
 };
 
 /**
@@ -104,7 +104,7 @@ KeyIDService.prototype.typingMistake = function(entityID, mistype = '', sessionI
  */
 KeyIDService.prototype.evaluateSample = function(entityID, tsData, nonce)
 {
-	return this.post('/evaluate', {entityID, tsData, nonce, Return:'JSON', Statistics:'extended'});
+  return this.post('/evaluate', {entityID, tsData, nonce, Return:'JSON', Statistics:'extended'});
 };
 
 /**
@@ -114,7 +114,7 @@ KeyIDService.prototype.evaluateSample = function(entityID, tsData, nonce)
  */
 KeyIDService.prototype.nonce = function(nonceTime)
 {
-	return this.get('/token/' + nonceTime, {'type':'nonce'});
+  return this.get('/token/' + nonceTime, {'type':'nonce'});
 };
 
 /**
@@ -125,11 +125,11 @@ KeyIDService.prototype.nonce = function(nonceTime)
  */
 KeyIDService.prototype.removeToken = function(entityID, tsData)
 {
-	return this.get('/token/' + entityID, {'type':'remove', 'return':'value'})
-	.then(response=>
-	{
-		return this.post('/token', {entityID, Token:response.entity, ReturnToken:'True', ReturnValidation:tsData, Type:'remove', Return:'JSON' });
-	});
+  return this.get('/token/' + entityID, {'type':'remove', 'return':'value'})
+  .then(response=>
+  {
+    return this.post('/token', {entityID, Token:response.entity, ReturnToken:'True', ReturnValidation:tsData, Type:'remove', Return:'JSON' });
+  });
 };
 
 /**
@@ -140,7 +140,7 @@ KeyIDService.prototype.removeToken = function(entityID, tsData)
  */
 KeyIDService.prototype.removeProfile = function(entityID, token)
 {
-	return this.post('/profile', {entityID, Code:token, Action:'remove', Return:'JSON'});
+  return this.post('/profile', {entityID, Code:token, Action:'remove', Return:'JSON'});
 };
 
 /**
@@ -151,11 +151,11 @@ KeyIDService.prototype.removeProfile = function(entityID, token)
  */
 KeyIDService.prototype.saveToken = function(entityID, tsData)
 {
-	return this.get('/token/' + entityID, {'type':'enrollment', 'return':'value'})
-	.then(response=>
-	{
-		return this.post('/token', {entityID, Token:response.entity, ReturnToken:'True', ReturnValidation:tsData, Type:'enrollment', Return:'JSON' });
-	});
+  return this.get('/token/' + entityID, {'type':'enrollment', 'return':'value'})
+  .then(response=>
+  {
+    return this.post('/token', {entityID, Token:response.entity, ReturnToken:'True', ReturnValidation:tsData, Type:'enrollment', Return:'JSON' });
+  });
 };
 
 /**
@@ -167,15 +167,15 @@ KeyIDService.prototype.saveToken = function(entityID, tsData)
  */
 KeyIDService.prototype.saveProfile = function(entityID, tsData, code = '')
 {
-	var data = {entityID, tsData, Return:'JSON', Action:'v2', Statistics:'extended'};
-	if (code !== '') data.Code = code;
+  var data = {entityID, tsData, Return:'JSON', Action:'v2', Statistics:'extended'};
+  if (code !== '') data.Code = code;
 
-	return this.post('/profile', data);
+  return this.post('/profile', data);
 };
 
 KeyIDService.prototype.getProfileInfo = function(entityID)
 {
-	return this.get('/profile/' + entityID, {});
+  return this.get('/profile/' + entityID, {});
 };
 
 module.exports = KeyIDService;
