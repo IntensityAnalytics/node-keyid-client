@@ -255,16 +255,4 @@ class KeyIDClient {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 export default KeyIDClient;
