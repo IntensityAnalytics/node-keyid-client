@@ -2,7 +2,8 @@
 
 <dl>
 <dt><a href="#KeyIDClient">KeyIDClient</a></dt>
-<dd></dd>
+<dd><p>KeyID services client.</p>
+</dd>
 <dt><a href="#KeyIDService">KeyIDService</a></dt>
 <dd></dd>
 </dl>
@@ -10,6 +11,8 @@
 <a name="KeyIDClient"></a>
 
 ## KeyIDClient
+KeyID services client.
+
 **Kind**: global class  
 
 * [KeyIDClient](#KeyIDClient)
@@ -28,8 +31,6 @@
 <a name="new_KeyIDClient_new"></a>
 
 ### new KeyIDClient(settings)
-KeyID services client.
-
 
 | Param | Type | Description |
 | --- | --- | --- |
