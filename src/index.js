@@ -1,7 +1,7 @@
 /*jslint node: true */
 'use strict';
 
-const KeyIDService = require('./keyidservice.js');
+import KeyIDService from './keyidservice.js';
 
 /**
  * KeyID services client.
@@ -311,4 +311,4 @@ KeyIDClient.prototype.getJSVerbose = function()
   });
 };
 
-module.exports = KeyIDClient;
+export default KeyIDClient;

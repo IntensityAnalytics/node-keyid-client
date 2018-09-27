@@ -1,5 +1,5 @@
-const KeyID = require('../src/index');
-const settings = require('./settings.json');
+import KeyID from '../src/index';
+import settings from './settings.json';
 
 settings.url = 'https://keyidservicesvm.tickstream.com';
 let client = new KeyID(settings);  

@@ -1,10 +1,10 @@
 /*jslint node: true */
 'use strict';
 
-const rest = require('rest');
-const mime = require('rest/interceptor/mime');
-const params = require('rest/interceptor/params');
-const timeout = require('rest/interceptor/timeout');
+import { wrap } from 'rest';
+import mime from 'rest/interceptor/mime';
+import params from 'rest/interceptor/params';
+import timeout from 'rest/interceptor/timeout';
 
 /**
  * KeyID services REST client.
@@ -17,7 +17,7 @@ function KeyIDService(url, license, timeoutMs = 1000)
 {
   this.url = url;
   this.license = license;
-  this.client = rest.wrap(params).wrap(timeout, {timeout: timeoutMs});
+  this.client = wrap(params).wrap(timeout, {timeout: timeoutMs});
 }
 
 /**
@@ -178,4 +178,4 @@ KeyIDService.prototype.getProfileInfo = function(entityID)
   return this.get('/profile/' + entityID, {});
 };
 
-module.exports = KeyIDService;
+export default KeyIDService;
