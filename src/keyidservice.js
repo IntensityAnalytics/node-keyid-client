@@ -1,5 +1,5 @@
 /*jslint node: true */
-"use strict";
+'use strict';
 
 const rest = require('rest');
 const mime = require('rest/interceptor/mime');

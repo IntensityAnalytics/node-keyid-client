@@ -1,7 +1,7 @@
 const KeyID = require('../src/index');
 const settings = require('./settings.json');
 
-settings.url = "https://keyidservices.tickstream.com";
+settings.url = 'https://keyidservicesvm.tickstream.com';
 let client = new KeyID(settings);  
 let entityID = 'javascripttest1';
 

@@ -1,6 +1,6 @@
 /*jslint node: true */
+'use strict';
 
-"use strict";
 const KeyIDService = require('./keyidservice.js');
 
 /**
@@ -153,12 +153,12 @@ KeyIDClient.prototype.EvaluateEnrollProfile = function(entityID, tsData, session
       return this.saveProfile(entityID, tsData, sessionID).then(saveData => {
         if (saveData.Error === '') {
           const evalData = {
-            "Error": "",
-            "Match": true,
-            "IsReady": false,
-            "Confidence":  "100.0",
-            "Fidelity": "100.0",
-            "Profiles": "0"
+            Error: '',
+            Match: true,
+            IsReady: false,
+            Confidence:  '100.0',
+            Fidelity: '100.0',
+            Profiles: '0'
           };
           return evalData;
         }
@@ -188,8 +188,8 @@ KeyIDClient.prototype.EvaluateEnrollProfile = function(entityID, tsData, session
             let evalData = Object.assign({}, saveData);
             evalData.Error = '';
             evalData.Match = true;
-            evalData.Confidence = "100.0";
-            evalData.Fidelity = "100.0";
+            evalData.Confidence = '100.0';
+            evalData.Fidelity = '100.0';
             return evalData;
           }
           else
@@ -223,12 +223,12 @@ KeyIDClient.prototype.Login = function(entityID, tsData, sessionID)
 KeyIDClient.prototype.SaveErrorResult = function()
 {
   const result = {
-    "Error": "Error saving profile.",
-    "Match": false,
-    "IsReady": false,
-    "Confidence": "0",
-    "Fidelity": "0",
-    "Profiles": "0"
+    Error: 'Error saving profile.',
+    Match: false,
+    IsReady: false,
+    Confidence: '0',
+    Fidelity: '0',
+    Profiles: '0'
   };
 
   return result;
