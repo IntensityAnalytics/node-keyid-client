@@ -1,6 +1,7 @@
 /*jslint node: true */
 'use strict';
 
+//import 'babel-polyfill';
 import KeyIDService from './keyidservice.js';
 
 /**
@@ -114,7 +115,7 @@ class KeyIDClient {
    * @param  {String} sessionID - Session identifier for logging purposes.
    * @return {Promise}
    */
-  EvaluateEnrollProfile(entityID, tsData, sessionID) {
+  evaluateEnrollProfile(entityID, tsData, sessionID) {
     return this.evaluateProfile(entityID, tsData, sessionID).then(data => {
       if (data.Error === 'EntityID does not exist.') {
         return this.saveProfile(entityID, tsData, sessionID).then(saveData => {
@@ -130,7 +131,7 @@ class KeyIDClient {
             return evalData;
           }
           else {
-            return this.SaveErrorResult();
+            return this.saveErrorResult();
           }
         });
       }
@@ -144,7 +145,7 @@ class KeyIDClient {
               return evalData;
             }
             else
-              return this.SaveErrorResult();
+              return this.saveErrorResult();
           });
         }
         else if (data.Error === 'The profile has too little data for a valid evaluation.' ||
@@ -159,7 +160,7 @@ class KeyIDClient {
               return evalData;
             }
             else
-              return this.SaveErrorResult();
+              return this.saveErrorResult();
           });
         }
       }
@@ -173,16 +174,16 @@ class KeyIDClient {
    * @param  {String} sessionID - Session identifier for logging purposes.
    * @return {Promise}
    */
-  Login(entityID, tsData, sessionID) {
+  login(entityID, tsData, sessionID) {
     if (this.settings.loginEnrollment)
-      return this.EvaluateEnrollProfile(entityID, tsData, sessionID);
+      return this.evaluateEnrollProfile(entityID, tsData, sessionID);
     else
-      return this.EvaluateProfile(entityID, tsData, sessionID);
+      return this.evaluateProfile(entityID, tsData, sessionID);
   }
   /**
    * Return object when error saving profile.
    */
-  SaveErrorResult() {
+  saveErrorResult() {
     const result = {
       Error: 'Error saving profile.',
       Match: false,

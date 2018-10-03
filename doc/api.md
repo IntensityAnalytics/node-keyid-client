@@ -20,9 +20,9 @@ KeyID services client.
     * [.saveProfile(entityID, tsData, sessionID)](#KeyIDClient+saveProfile) ⇒ <code>Promise</code>
     * [.removeProfile(entityID, tsData, sessionID)](#KeyIDClient+removeProfile) ⇒ <code>Promise</code>
     * [.evaluateProfile(entityID, tsData, sessionID)](#KeyIDClient+evaluateProfile) ⇒ <code>Promise</code>
-    * [.EvaluateEnrollProfile(entityID, tsData, sessionID)](#KeyIDClient+EvaluateEnrollProfile) ⇒ <code>Promise</code>
-    * [.Login(entityID, tsData, sessionID)](#KeyIDClient+Login) ⇒ <code>Promise</code>
-    * [.SaveErrorResult()](#KeyIDClient+SaveErrorResult)
+    * [.evaluateEnrollProfile(entityID, tsData, sessionID)](#KeyIDClient+evaluateEnrollProfile) ⇒ <code>Promise</code>
+    * [.login(entityID, tsData, sessionID)](#KeyIDClient+login) ⇒ <code>Promise</code>
+    * [.saveErrorResult()](#KeyIDClient+saveErrorResult)
     * [.getProfileInfo(entityID)](#KeyIDClient+getProfileInfo)
     * [.evalThreshold(confidence, fidelity)](#KeyIDClient+evalThreshold) ⇒ <code>Bool</code>
     * [.alphaToBool(input)](#KeyIDClient+alphaToBool) ⇒ <code>Bool</code>
@@ -75,9 +75,9 @@ Evaluates a KeyID profile.
 | tsData | <code>String</code> | Typing sample to evaluate against profile. |
 | sessionID | <code>String</code> | Session identifier for logging purposes. |
 
-<a name="KeyIDClient+EvaluateEnrollProfile"></a>
+<a name="KeyIDClient+evaluateEnrollProfile"></a>
 
-### keyIDClient.EvaluateEnrollProfile(entityID, tsData, sessionID) ⇒ <code>Promise</code>
+### keyIDClient.evaluateEnrollProfile(entityID, tsData, sessionID) ⇒ <code>Promise</code>
 Evaluates a given profile and adds typing sample to profile.
 
 **Kind**: instance method of [<code>KeyIDClient</code>](#KeyIDClient)  
@@ -88,9 +88,9 @@ Evaluates a given profile and adds typing sample to profile.
 | tsData | <code>String</code> | Typing sample to evaluate and save. |
 | sessionID | <code>String</code> | Session identifier for logging purposes. |
 
-<a name="KeyIDClient+Login"></a>
+<a name="KeyIDClient+login"></a>
 
-### keyIDClient.Login(entityID, tsData, sessionID) ⇒ <code>Promise</code>
+### keyIDClient.login(entityID, tsData, sessionID) ⇒ <code>Promise</code>
 Courtesy function that choses normal evaluation or passive enrollment to simplify calling code.
 
 **Kind**: instance method of [<code>KeyIDClient</code>](#KeyIDClient)  
@@ -101,9 +101,9 @@ Courtesy function that choses normal evaluation or passive enrollment to simplif
 | tsData | <code>String</code> | Typing sample to evaluate and save. |
 | sessionID | <code>String</code> | Session identifier for logging purposes. |
 
-<a name="KeyIDClient+SaveErrorResult"></a>
+<a name="KeyIDClient+saveErrorResult"></a>
 
-### keyIDClient.SaveErrorResult()
+### keyIDClient.saveErrorResult()
 Return object when error saving profile.
 
 **Kind**: instance method of [<code>KeyIDClient</code>](#KeyIDClient)  
