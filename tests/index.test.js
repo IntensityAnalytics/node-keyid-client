@@ -9,6 +9,13 @@ beforeAll(() => {
   jest.setTimeout(50000);
 });
 
+test('monitor', () => {
+  expect.assertions(1);
+  return client.monitor(entityID, 'fakedata', 'notes').then(resp => {
+    expect(resp).toBe('');
+  });
+});
+
 test('remove profile', () => {
   expect.assertions(1);
   return client.removeProfile(entityID, '', '').then(resp => {

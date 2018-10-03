@@ -205,6 +205,13 @@ class KeyIDClient {
         return data[0];
       });
   }
+  monitor(entityID, tsData, entityNotes) {
+    return this.service.monitor(entityID, tsData, entityNotes)
+      .then(response => {
+        var data = JSON.parse(response.entity);
+        return data;
+      });
+  }
   /**
    * Compares a given confidence and fidelity against pre-determined thresholds.
    * @param  {Number} confidence - KeyID evaluation confidence.

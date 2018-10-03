@@ -147,6 +147,9 @@ class KeyIDService {
   getProfileInfo(entityID) {
     return this.get('/profile/' + entityID, {});
   }
+  monitor(entityID, tsData, entityNotes) {
+    return this.post('/monitor', { entityID, tsData, entityNotes });
+  }
 }
 
 export default KeyIDService;
