@@ -128,6 +128,7 @@ test('test passive enrollment', () => {
   }).then(() => {
     return client.evaluateProfile(entityID, 'jdJBEsIgDAXQs3gDQkggW912dOsBPIAbdxzeTh1HUvgV2L7Jz6dlrsqqgUyFjHMM66mPelnqdan37d7OJ94x3tjzmKX0Ya+OJcc0gNAdIxAqLZMoYNqQ9dNcqJQAKrhpSjTFzGZ2+7I/TbOi3bRlRdDzDlkfmltmjCp4ltA09SyDCuXH1l+SUOiQHVZYWZwLNfRNrWVUFOw2ZP1ujkUZh74B');
   }).then(resp => {
+    client.settings.loginEnrollment = false;
     expect(resp.Confidence).toBe('98');
     expect(resp.Fidelity).toBe('72');
     expect(resp.Profiles).toBe('15');
